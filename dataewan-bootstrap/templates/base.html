@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="{{ DEFAULT_LANG }}">
+<head>
+        {% block head %}
+        <title>{% block title %}{{ SITENAME }}{% endblock title %}</title>
+        <meta charset="utf-8" />
+        {% if FEED_ATOM %}
+        <link href="{{ FEED_DOMAIN }}/{{ FEED_ATOM }}" type="application/atom+xml" rel="alternate" title="{{ SITENAME }} Atom Feed" />
+        {% endif %}
+        {% if FEED_RSS %}
+        <link href="{{ FEED_DOMAIN }}/{{ FEED_RSS }}" type="application/rss+xml" rel="alternate" title="{{ SITENAME }} RSS Feed" />
+        {% endif %}
+        {% if CATEGORY_FEED_ATOM %}
+        <link href="{{ FEED_DOMAIN }}/{{ CATEGORY_FEED_ATOM }}" type="application/atom+xml" rel="alternate" title="{{ SITENAME }} Categories Atom Feed" />
+        {% endif %}
+        {% if CATEGORY_FEED_RSS %}
+        <link href="{{ FEED_DOMAIN }}/{{ CATEGORY_FEED_RSS }}" type="application/rss+xml" rel="alternate" title="{{ SITENAME }} Categories RSS Feed" />
+        {% endif %}
+        {% if TAG_FEED_ATOM %}
+        <link href="{{ FEED_DOMAIN }}/{{ TAG_FEED_ATOM }}" type="application/atom+xml" rel="alternate" title="{{ SITENAME }} Tags Atom Feed" />
+        {% endif %}
+        {% if TAG_FEED_RSS %}
+        <link href="{{ FEED_DOMAIN }}/{{ TAG_FEED_RSS }}" type="application/rss+xml" rel="alternate" title="{{ SITENAME }} Tags RSS Feed" />
+        {% endif %}
+        {% endblock head %}
+		<link rel="stylesheet" href="{{ SITEURL }}/theme/css/bootstrap.css" />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="page-header body">
+                <h1><a href="{{ SITEURL }}">{{ SITENAME }} <strong>{{ SITESUBTITLE }}</strong></a></h1>
+        </header><!-- /#banner -->
+		<nav id="menu">
+		<ul class="nav nav-tabs">
+			<li>
+			<a href="{{ SITEURL }}">Home</a>
+			</li>
+        {% for title, link in MENUITEMS %}
+            <li><a href="{{ link }}">{{ title }}</a></li>
+        {% endfor %}
+        {% if DISPLAY_PAGES_ON_MENU %}
+          {% for p in PAGES %}
+            <li{% if p == page %} class="active"{% endif %}><a href="{{ SITEURL }}/{{ p.url }}">{{ p.title }}</a></li>
+          {% endfor %}
+        {% else %}
+          {% for cat, null in categories %}
+            <li{% if cat == category %} class="active"{% endif %}><a href="{{ SITEURL }}/{{ cat.url }}">{{ cat }}</a></li>
+          {% endfor %}
+        {% endif %}
+        </ul></nav><!-- /#menu -->
+        <div class="row">
+        	<div class="span9 offset3">
+			{% block content %}
+			{% endblock %}
+			</div>
+			<div class="span2 sidebar">
+				<h3>Tags</h3>
+				<div class="tags">
+					<ul class="unstyled">
+						{% for tag in tag_cloud %}
+						<li class="tag-{{ tag.1 }}"><a href="{{ SITEURL }}/tag/{{ tag.0 }}.html">{{ tag.0 }}</a></li>
+						{% endfor %}
+					</ul>
+				</div>
+			</div>
+		</div>
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+					<small class="muted">
+						My blog is powered by <a href="http://getpelican.com/">Pelican</a>
+					</small>
+                </address><!-- /#about -->
+        </footer><!-- /#contentinfo -->
+        <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+		<script type="text/javascript" src="{{ SITEURL }}/theme/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="{{ SITEURL }}/theme/js/dataewan.js"></script>
+</body>
+</html>
